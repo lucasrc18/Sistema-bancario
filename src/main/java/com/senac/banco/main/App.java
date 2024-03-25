@@ -1,13 +1,10 @@
 package com.senac.banco.main;
 
-/**
- * Hello world!
- *
- */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+import com.senac.banco.view.GraphicalInterface;
+
+public class App {
+    public static void main(String[] args){
+        GraphicalInterface gui = new GraphicalInterface();
+        
     }
 }
