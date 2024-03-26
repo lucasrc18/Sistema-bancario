@@ -1,10 +1,14 @@
 package com.senac.banco.view;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class UserRegistrationWindow extends JFrame {
 
@@ -14,14 +18,23 @@ public class UserRegistrationWindow extends JFrame {
 		super("Registrar uma nova conta");
 		
 		Dimension ds = new Dimension(400, 600);
-		JPanel content = new JPanel();
+		JPanel content = new JPanel(new GridLayout());
 		
 		JLabel titleLabel = new JLabel("Nova conta: ");
-//		titleLabel.setFont();
+		titleLabel.setFont(new Font("Roboto", Font.PLAIN, 20));
+		
+		JPanel headerPanel = new JPanel();
+		headerPanel.add(titleLabel);
 		
 		loginPanel = new JPanel();
 
-		content.add(titleLabel);
+		JTextField email = new JTextField("Email: ");
+		JTextField senha = new JTextField("Senha: ");
+		
+		loginPanel.add(email);
+		loginPanel.add(senha);
+		
+		content.add(headerPanel);
 		content.add(loginPanel);
 		
 		// Configura a janela
