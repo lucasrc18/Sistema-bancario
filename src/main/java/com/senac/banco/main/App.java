@@ -3,6 +3,7 @@ package com.senac.banco.main;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.People;
 import com.senac.banco.view.GraphicalInterface;
+import com.senac.banco.view.UserRegistrationWindow;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,13 +19,19 @@ public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<BankAccount> bankAccounts;
     public static void main(String[] args){
+<<<<<<< Updated upstream
        // GraphicalInterface gui = new GraphicalInterface();
+=======
+//        GraphicalInterface gui = new GraphicalInterface();
+    	new UserRegistrationWindow();
+>>>>>>> Stashed changes
 
         bankAccounts = new ArrayList<BankAccount>();
         operations();
 
     }
     public static void operations(){
+<<<<<<< Updated upstream
         System.out.println("-------------------------------------------------");
         System.out.println("--------------Bem vindo ao flaBankinho!--------------");
         System.out.println("-------------------------------------------------");
@@ -68,6 +75,19 @@ public class App {
 
 
 
+=======
+        System.out.println("---------------------------------------------------");
+        System.out.println("--------------Bem vindo ao seu banco!--------------");
+        System.out.println("---------------------------------------------------");
+        System.out.println("-----Selecione qual ação você deseja realizar?-----");
+        System.out.println("---------------------------------------------------");
+        System.out.println("Opção 1: Criar uma conta");
+        System.out.println("Opção 2: Deposito");
+        System.out.println("Opção 3: Saque");
+        System.out.println("Opção 4: Transferencia");
+        System.out.println("Opção 5: Listar contas");
+        System.out.println("Opção 6: Sair");
+>>>>>>> Stashed changes
     }
     public static void createAccount(){
         System.out.println("\nNome: ");
