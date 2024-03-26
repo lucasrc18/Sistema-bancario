@@ -19,24 +19,20 @@ public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<BankAccount> bankAccounts;
     public static void main(String[] args){
-<<<<<<< Updated upstream
        // GraphicalInterface gui = new GraphicalInterface();
-=======
-//        GraphicalInterface gui = new GraphicalInterface();
     	new UserRegistrationWindow();
->>>>>>> Stashed changes
-
+    	
         bankAccounts = new ArrayList<BankAccount>();
         operations();
 
     }
     public static void operations(){
-<<<<<<< Updated upstream
-        System.out.println("-------------------------------------------------");
+
+        System.out.println("-----------------------------------------------------");
         System.out.println("--------------Bem vindo ao flaBankinho!--------------");
-        System.out.println("-------------------------------------------------");
-        System.out.println("-----Selecione a operação que deseja realizar-----");
-        System.out.println("-------------------------------------------------");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("-------Selecione a operação que deseja realizar------");
+        System.out.println("-----------------------------------------------------");
         System.out.println("Opção 1: Criar conta");
         System.out.println("Opção 2: Depositar");
         System.out.println("Opção 3: Sacar");
@@ -71,23 +67,6 @@ public class App {
                 operations();
                 break;
         }
-
-
-
-
-=======
-        System.out.println("---------------------------------------------------");
-        System.out.println("--------------Bem vindo ao seu banco!--------------");
-        System.out.println("---------------------------------------------------");
-        System.out.println("-----Selecione qual ação você deseja realizar?-----");
-        System.out.println("---------------------------------------------------");
-        System.out.println("Opção 1: Criar uma conta");
-        System.out.println("Opção 2: Deposito");
-        System.out.println("Opção 3: Saque");
-        System.out.println("Opção 4: Transferencia");
-        System.out.println("Opção 5: Listar contas");
-        System.out.println("Opção 6: Sair");
->>>>>>> Stashed changes
     }
     public static void createAccount(){
         System.out.println("\nNome: ");
