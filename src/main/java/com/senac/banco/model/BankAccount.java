@@ -40,11 +40,11 @@ public class BankAccount {
 	}
 
 	public String toString(){
-		return  "\nAccountNumber: " + this.getAccountNumber() +
-				"\nName: " + this.people.getName() +
-		        "\nCPF" + this.people.getCPF() +
+		return  "\nNumero da Conta: " + this.getAccountNumber() +
+				"\nNome: " + this.people.getName() +
+		        "\nCPF: " + this.people.getCPF() +
 				"\nEmail: " + this.people.getEmail() +
-				"\nBalance: " + Utils.doubleToString(this.getBalance()) +
+				"\nSaldo: " + Utils.doubleToString(this.getBalance()) +
 				"\n";
 
 
@@ -54,18 +54,18 @@ public class BankAccount {
 	public void Deposit (Double value){
 		if (value > 0){
 			setBalance(getBalance() + value);
-			System.out.println("Your deposit has been made!");
+			System.out.println("Deposito realizado com sucesso!");
 		}else {
-			System.out.println("Unable to make your deposit");
+			System.out.println("Não  foi possivel realizar o deposito");
 		}
 	}
 
 	public void Withdraw (Double value){
         if(value > 0 && this.getBalance() >= value){
             setBalance(getBalance() - value);
-            System.out.println("Successful withdrawal!!");
+            System.out.println("Saque realizado com sucesso!");
         }else {
-            System.out.println("Unable to withdraw");
+            System.out.println("Não foi possivel realizar o saque!");
         }
     }
     public void Transfer (BankAccount depositAccount, Double value){
@@ -73,9 +73,9 @@ public class BankAccount {
             setBalance(getBalance() - value);
 
             depositAccount.balance = depositAccount.getBalance() + value;
-            System.out.println("Transfer completed successfully!");
+            System.out.println("Transferência realizada com sucesso!");
         }else{
-            System.out.println("failed to make the transfer");
+            System.out.println("Não foi possivel realizar a tranferência");
         }
 
     }

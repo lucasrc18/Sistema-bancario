@@ -6,7 +6,7 @@ public class People {
     private String cpf;
     private String email;
 
-    public People(String name, String cPF, String email){
+    public People(String name, String cpf, String email){
         this.name = name;
         this.cpf = cpf;
         this.email = email;
@@ -30,7 +30,7 @@ public class People {
     }
 
     public String toString(){
-        return "\nName: " + this.getName() +
+        return "\nNome: " + this.getName() +
                 "\nCPF: " + this.getCPF() +
                 "\nEmail: " + this.getEmail();
     }
