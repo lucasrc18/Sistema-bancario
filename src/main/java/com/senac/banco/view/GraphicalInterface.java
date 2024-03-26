@@ -2,10 +2,13 @@ package com.senac.banco.view;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.senac.banco.main.Utils;
 
 /*
  * Classe responsável por cordenar a interface gráfica
@@ -42,7 +45,7 @@ public class GraphicalInterface extends JFrame {
 		window.setLayout(layout);
 		
 		
-		main = new JPanel();
+		main = new MainWindow();
 		window.add(main, "main");
 		
 		// Configura a janela
