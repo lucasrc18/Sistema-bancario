@@ -7,9 +7,9 @@ public class BankAccount {
 	private static int accountant = 1;
 	private double balance = 0.0;
 	private int accountNumber;
-	private People people;
+	private User people;
 
-	public BankAccount (People people){
+	public BankAccount (User people){
 		this.accountNumber = accountant;
 		this.people = people;
 		accountant += 1;
@@ -31,11 +31,11 @@ public class BankAccount {
 		this.accountNumber = accountNumber;
 	}
 
-	public People getPeople() {
+	public User getPeople() {
 		return people;
 	}
 
-	public void setPeople(People people) {
+	public void setPeople(User people) {
 		this.people = people;
 	}
 

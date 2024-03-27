@@ -1,7 +1,7 @@
 package com.senac.banco.main;
 
 import com.senac.banco.model.BankAccount;
-import com.senac.banco.model.People;
+import com.senac.banco.model.User;
 import com.senac.banco.view.GraphicalInterface;
 import com.senac.banco.view.UserRegistrationWindow;
 
@@ -19,11 +19,11 @@ public class App {
     static Scanner input = new Scanner(System.in);
     static ArrayList<BankAccount> bankAccounts;
     public static void main(String[] args){
-       // GraphicalInterface gui = new GraphicalInterface();
-    	new UserRegistrationWindow();
+        GraphicalInterface gui = new GraphicalInterface();
+//    	new UserRegistrationWindow();
     	
         bankAccounts = new ArrayList<BankAccount>();
-        operations();
+        //operations();
 
     }
     public static void operations(){
@@ -76,7 +76,7 @@ public class App {
         System.out.println("\nEmail: ");
         String email = input.next();
 
-        People people = new People(name,cpf,email);
+        User people = new User(name,cpf,email);
         BankAccount account = new BankAccount(people);
 
         bankAccounts.add(account);
