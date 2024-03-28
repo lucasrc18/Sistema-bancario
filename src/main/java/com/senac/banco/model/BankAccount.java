@@ -88,4 +88,7 @@ public class BankAccount {
         }
 
     }
+
+	public void setAccountNumber(int i) {
+	}
 }
