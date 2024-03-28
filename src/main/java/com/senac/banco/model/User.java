@@ -14,10 +14,13 @@ public class User {
         this.email = email;
         User.counter += 1;
         this.userNum = User.counter;
+        
+        System.out.println(this);
     }
     public User() {
     	User.counter += 1;
     	this.userNum = User.counter;
+    	System.out.println(this);
     }
     
     
@@ -60,6 +63,13 @@ public class User {
     		return;
     	
     	new BankAccount(this);
+    }
+    
+    public void createBankAccount(double minDeposit) {
+    	if(hasBankAccount)
+    		return;
+    	
+    	new BankAccount(this, minDeposit);
     }
     
     public String toString(){

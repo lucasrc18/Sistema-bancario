@@ -26,6 +26,8 @@ public class UserRegistrationWindow extends JFrame {
 	public UserRegistrationWindow(final User user, final AccountLabels accountLabels) {
 		super("Registrar uma nova conta");
 		
+		final UserRegistrationWindow regwin = this;
+		
 		Dimension ds = new Dimension(400, 600);
 		JPanel content = new JPanel();
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
@@ -87,7 +89,10 @@ public class UserRegistrationWindow extends JFrame {
 						accountLabels.balanceLabel.setText(userBalance);
 					}
 				});
+				
+				regwin.dispose();
 			}
+
 		});
 		
 		content.add(headerPanel);

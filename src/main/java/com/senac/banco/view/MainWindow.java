@@ -19,6 +19,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -50,8 +51,6 @@ public class MainWindow extends JPanel {
 		Font font = new Font("Roboto", Font.PLAIN, 20);
 		
 		final User user = new User();
-
-		final BankAccount userBA = BankAccount.getBankAccount(user);
 		
 		/*
 		 * Transferir
@@ -70,16 +69,16 @@ public class MainWindow extends JPanel {
 		
 		accountLabels.panel = bankAccountPanel;
 		
-		accountLabels.nameLabel = new JLabel("Nome: ?");
+		accountLabels.nameLabel = new JLabel("Nome: ?", SwingConstants.CENTER);
 		accountLabels.nameLabel.setFont(font);
 		
-		accountLabels.cpfLabel = new JLabel("CPF: ?");
+		accountLabels.cpfLabel = new JLabel("CPF: ?", SwingConstants.CENTER);
 		accountLabels.cpfLabel.setFont(font);
 		
-		accountLabels.accountNumLabel = new JLabel("Não registrado");
+		accountLabels.accountNumLabel = new JLabel("Não registrado", SwingConstants.CENTER);
 		accountLabels.accountNumLabel.setFont(font);
 		
-		accountLabels.balanceLabel = new JLabel("R$ ?");
+		accountLabels.balanceLabel = new JLabel("R$ ?", SwingConstants.CENTER);
 		accountLabels.balanceLabel.setFont(font);
 		
 		accountPanel.add(accountLabels.nameLabel);
@@ -96,24 +95,29 @@ public class MainWindow extends JPanel {
 		depositBtn = new JButton("Deposito");
 		
 		
-		/*transferBtn.addActionListener(new ActionListener() {
+		transferBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Abrir lista de contas registradas
-				
-				// selecionar conta
-				
-				// transferir conta
+				if(BankAccount.getBankAccount(user) != null) {
+					final BankAccount userBA = BankAccount.getBankAccount(user);
+					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja transferir? (R$)"));
+					// para quem?
+//					userBA.Transfer(/* destino */, amount);
+				} else {
+					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
+					new UserRegistrationWindow(user, accountLabels);
+				}
 			}
-		});*/
+		});
 		
 		withdrawBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userBA != null) {
+				if(BankAccount.getBankAccount(user) != null) {
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja sacar? (R$)"));
-					userBA.Withdraw(amount);
+					BankAccount.getBankAccount(user).Withdraw(amount);
 				} else {
+					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);
 				}
 			}
@@ -122,10 +126,12 @@ public class MainWindow extends JPanel {
 		depositBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(userBA != null) {
-					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja depositar? (R$)"));
-					userBA.Deposit(amount);
+				if(BankAccount.getBankAccount(user) != null) {
+					String answer = JOptionPane.showInputDialog("Qual valor deseja depositar? (R$)");
+					double amount = Double.parseDouble(answer);
+					BankAccount.getBankAccount(user).Deposit(amount);
 				} else {
+					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);
 				}
 			}
