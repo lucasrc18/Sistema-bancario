@@ -12,14 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.senac.banco.components.TextField;
+import com.senac.banco.main.Utils;
+import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.User;
+import com.senac.banco.view.MainWindow.AccountLabels;
 
 public class UserRegistrationWindow extends JFrame {
 	
-	public UserRegistrationWindow(final User user) {
+	public UserRegistrationWindow(final User user, final AccountLabels accountLabels) {
 		super("Registrar uma nova conta");
 		
 		Dimension ds = new Dimension(400, 600);
@@ -56,7 +60,6 @@ public class UserRegistrationWindow extends JFrame {
 		btnPanel.add(updateBtn);
 		
 		updateBtn.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(!cpfField.getText().isEmpty())
@@ -65,8 +68,26 @@ public class UserRegistrationWindow extends JFrame {
 					user.setName(nameField.getText());
 				if(!emailField.getText().isEmpty())
 					user.setEmail(emailField.getText());
+				
+				user.createBankAccount();
+				
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						BankAccount userBA = BankAccount.getBankAccount(user);
+						
+						String userName = "Nome: " + user.getName();
+						String userCpf = "CPF: " + user.getCPF();
+						String userAccountNum = (userBA != null) ? "N°: " + Integer.toString(userBA.getAccountNumber()) : "Não registrado";
+						String userBalance = (userBA != null) ? Utils.doubleToRealCurrency(userBA.getBalance()) : "R$ ?";
+						
+						accountLabels.nameLabel.setText(userName);
+						accountLabels.cpfLabel.setText(userCpf);
+						accountLabels.accountNumLabel.setText(userAccountNum);
+						accountLabels.balanceLabel.setText(userBalance);
+					}
+				});
 			}
-			
 		});
 		
 		content.add(headerPanel);

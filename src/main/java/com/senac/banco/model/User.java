@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String cpf;
     private String email;
+    private boolean hasBankAccount;
 
     public User(String name, String cpf, String email){
         this.name = name;
@@ -52,6 +53,13 @@ public class User {
     
     public int getUserNum() {
     	return this.userNum;
+    }
+    
+    public void createBankAccount() {
+    	if(hasBankAccount)
+    		return;
+    	
+    	new BankAccount(this);
     }
     
     public String toString(){

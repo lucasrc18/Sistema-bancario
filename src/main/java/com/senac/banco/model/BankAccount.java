@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+import java.lang.NumberFormatException;
+import java.lang.NullPointerException;
+
 import com.senac.banco.main.Utils;
 
 public class BankAccount {
@@ -17,18 +21,36 @@ public class BankAccount {
 
 	public BankAccount (User user) {
 		Random random = new Random(System.currentTimeMillis());
+		
 		int accountNumber = Utils.randomNumber(100000, 999999);
 		while(account_number_list.contains(accountNumber)) {			
 			accountNumber = Utils.randomNumber(100000, 999999);
 		}
 		this.accountNumber = accountNumber;
 		this.user = user;
+		
+		double amount = 0;
+		while(amount < 50) {
+			try {
+				amount = Double.parseDouble(JOptionPane.showInputDialog("Qual deposito inicial? (Min: R$ 50,00)"));
+			} catch (NullPointerException e) {
+				amount = 0;
+			} catch (NumberFormatException e) {
+				amount = 0;
+			}
+		}
+		
+		this.balance = amount;
+		account_list.put(this.accountNumber, this);
+		account_number_list.add(this.accountNumber);
+		System.out.println(toString());
 	}
 	
 	public static BankAccount getBankAccount(final User user) {
 		if(account_list.isEmpty())
 			return null;
-		return account_list.get(account_number_list.get(user.getUserNum()));
+		
+		return account_list.get(account_number_list.get(user.getUserNum()-1));
 	}
 
 	public double getBalance() {

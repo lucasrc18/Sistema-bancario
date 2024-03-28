@@ -1,13 +1,14 @@
 package com.senac.banco;
+
 import com.senac.banco.main.App;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.User;
-import org.junit.jupiter.api.DynamicNode;
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BankTest {
 

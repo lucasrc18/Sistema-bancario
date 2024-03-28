@@ -11,10 +11,15 @@ import java.text.NumberFormat;
 import java.util.Random;
 
 public class Utils {
-    static NumberFormat formattingValues = new DecimalFormat ("R$ #, ##0.00");
+    public static NumberFormat formattingValues = new DecimalFormat ("R$ #, ##0.00");
 
     public static String doubleToString(Double value){
         return formattingValues.format(value);
+    }
+    
+    public static String doubleToRealCurrency(double amount) {
+    	DecimalFormat df = new DecimalFormat("#,##0.00");
+    	return "R$ " + df.format(amount);
     }
     
     public static Font loadFont(String fileName, float fontSize) {

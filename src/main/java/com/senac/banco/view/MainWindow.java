@@ -1,20 +1,32 @@
 package com.senac.banco.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
+import com.senac.banco.components.ImageComponent;
+import com.senac.banco.components.ImageComponent.ImageDimension;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.User;
 
@@ -22,13 +34,24 @@ import com.senac.banco.model.User;
  * Classe responsavel por cordenar a pagina principal da aplicação
  */
 public class MainWindow extends JPanel {
+	public static class AccountLabels {
+		public JLabel nameLabel;
+		public JLabel cpfLabel;
+		public JLabel accountNumLabel;
+		public JLabel balanceLabel;
+		public JPanel panel;
+	}
 	
 	public MainWindow() {
 		super();
 		
+		final MainWindow mainWindow = this;
+		
 		Font font = new Font("Roboto", Font.PLAIN, 20);
 		
 		final User user = new User();
+
+		final BankAccount userBA = BankAccount.getBankAccount(user);
 		
 		/*
 		 * Transferir
@@ -39,34 +62,30 @@ public class MainWindow extends JPanel {
 		JPanel accountPanel = new JPanel(new GridLayout(4, 1));
 		accountPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
 		
-//		accountPanel.setBackground(Color.BLUE);
+		accountPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 		
-		JPanel bankAccountPanel = new JPanel();
-		JLabel nameLabel, cpfLabel, accountNumLabel, balanceLabel;
-		String userName, userCpf, userAccountNum, userBalance;
-		BankAccount userBA = BankAccount.getBankAccount(user);
+		JPanel bankAccountPanel = new JPanel();	
 		
-		userName = "Nome: " + user.getName();
-		userCpf = "CPF: " + user.getCPF();
-		userAccountNum = (userBA != null) ? Integer.toString(userBA.getAccountNumber()) : "Não registrado";
-		userBalance = (userBA != null) ? Double.toString(userBA.getBalance()) : "R$ ?";
+		AccountLabels accountLabels = new AccountLabels();
 		
-		nameLabel = new JLabel(userName);
-		nameLabel.setFont(font);
+		accountLabels.panel = bankAccountPanel;
 		
-		cpfLabel = new JLabel(userCpf);
-		cpfLabel.setFont(font);
+		accountLabels.nameLabel = new JLabel("Nome: ?");
+		accountLabels.nameLabel.setFont(font);
 		
-		accountNumLabel = new JLabel(userAccountNum);
-		accountNumLabel.setFont(font);
+		accountLabels.cpfLabel = new JLabel("CPF: ?");
+		accountLabels.cpfLabel.setFont(font);
 		
-		balanceLabel = new JLabel(userBalance);
-		balanceLabel.setFont(font);
+		accountLabels.accountNumLabel = new JLabel("Não registrado");
+		accountLabels.accountNumLabel.setFont(font);
 		
-		accountPanel.add(nameLabel);
-		accountPanel.add(cpfLabel);
-		accountPanel.add(accountNumLabel);
-		accountPanel.add(balanceLabel);
+		accountLabels.balanceLabel = new JLabel("R$ ?");
+		accountLabels.balanceLabel.setFont(font);
+		
+		accountPanel.add(accountLabels.nameLabel);
+		accountPanel.add(accountLabels.cpfLabel);
+		accountPanel.add(accountLabels.accountNumLabel);
+		accountPanel.add(accountLabels.balanceLabel);
 		
 		JPanel operationsPanel = new JPanel();
 		
@@ -75,6 +94,7 @@ public class MainWindow extends JPanel {
 		transferBtn = new JButton("Transferir");
 		withdrawBtn = new JButton("Saque");
 		depositBtn = new JButton("Deposito");
+		
 		
 		/*transferBtn.addActionListener(new ActionListener() {
 			@Override
@@ -94,7 +114,7 @@ public class MainWindow extends JPanel {
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja sacar? (R$)"));
 					userBA.Withdraw(amount);
 				} else {
-					new UserRegistrationWindow(user);
+					new UserRegistrationWindow(user, accountLabels);
 				}
 			}
 		});
@@ -106,7 +126,7 @@ public class MainWindow extends JPanel {
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja depositar? (R$)"));
 					userBA.Deposit(amount);
 				} else {
-					new UserRegistrationWindow(user);
+					new UserRegistrationWindow(user, accountLabels);
 				}
 			}
 		});
@@ -115,12 +135,18 @@ public class MainWindow extends JPanel {
 		operationsPanel.add(withdrawBtn);
 		operationsPanel.add(depositBtn);
 		
-		JPanel header = new JPanel();
-		header.setPreferredSize(new Dimension(1200, 200));
-		header.add(accountPanel);
-		header.add(operationsPanel);
+		JPanel content = new JPanel();
 		
-		this.add(header);
+		ImageComponent img = new ImageComponent("moedaxxxs.png");
+		
+		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+		
+		content.add(img);
+		content.add(accountPanel);
+		content.add(operationsPanel);
+		
+		this.add(content);
 	}
 
+	
 }

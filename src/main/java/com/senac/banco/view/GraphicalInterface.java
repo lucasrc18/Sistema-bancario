@@ -68,3 +68,6 @@ public class GraphicalInterface extends JFrame {
 		layout.show(window, windowName);
 	}
 }
+
+
+// 
