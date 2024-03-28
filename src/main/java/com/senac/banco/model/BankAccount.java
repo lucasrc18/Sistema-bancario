@@ -1,18 +1,34 @@
 package com.senac.banco.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import com.senac.banco.main.Utils;
 
 public class BankAccount {
-
-	private static int accountant = 1;
+	private final static List<Integer> account_number_list = new ArrayList<Integer>();
+	private final static Map<Integer, BankAccount> account_list = new HashMap<Integer, BankAccount>();
 	private double balance = 0.0;
-	private int accountNumber;
-	private User people;
+	private final int accountNumber;
+	private User user;
 
-	public BankAccount (User people){
-		this.accountNumber = accountant;
-		this.people = people;
-		accountant += 1;
+	public BankAccount (User user) {
+		Random random = new Random(System.currentTimeMillis());
+		int accountNumber = Utils.randomNumber(100000, 999999);
+		while(account_number_list.contains(accountNumber)) {			
+			accountNumber = Utils.randomNumber(100000, 999999);
+		}
+		this.accountNumber = accountNumber;
+		this.user = user;
+	}
+	
+	public static BankAccount getBankAccount(final User user) {
+		if(account_list.isEmpty())
+			return null;
+		return account_list.get(account_number_list.get(user.getUserNum()));
 	}
 
 	public double getBalance() {
@@ -27,23 +43,19 @@ public class BankAccount {
 		return accountNumber;
 	}
 
-	public void setAccountNumber(int accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
 	public User getPeople() {
-		return people;
+		return user;
 	}
 
-	public void setPeople(User people) {
-		this.people = people;
+	public void setPeople(User user) {
+		this.user = user;
 	}
 
 	public String toString(){
 		return  "\nNumero da Conta: " + this.getAccountNumber() +
-				"\nNome: " + this.people.getName() +
-		        "\nCPF: " + this.people.getCPF() +
-				"\nEmail: " + this.people.getEmail() +
+				"\nNome: " + this.user.getName() +
+		        "\nCPF: " + this.user.getCPF() +
+				"\nEmail: " + this.user.getEmail() +
 				"\nSaldo: " + Utils.doubleToString(this.getBalance()) +
 				"\n";
 	}

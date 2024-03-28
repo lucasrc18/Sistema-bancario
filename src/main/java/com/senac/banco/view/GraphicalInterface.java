@@ -27,18 +27,16 @@ public class GraphicalInterface extends JFrame {
 	
 	/**
 	 * Constrói uma nova instancia da interface grafica
-	 * Define o tamanho da tela com um valor padrão (W 75% | H 75%)
+	 * Define o tamanho da tela com um valor padrão
 	 * @params null
 	 * @returns this
 	 * */
 	public GraphicalInterface() {
 		super("Sistema bancario");
 		
-		/** Define o tamanho da janela como 75% do monitor do usuario (W / H) */
+		/** Define o tamanho da janela como 1200 / 600 (W / H) */
 		/** Estipula as dimensões da janela baseada no tamanho da tela */
-		Dimension windowSize = Toolkit.getDefaultToolkit().getScreenSize();
-		windowSize.width = (int) Math.ceil((double) windowSize.width * 0.75);
-		windowSize.height = (int) Math.ceil((double) windowSize.height * 0.75);
+		Dimension windowSize = new Dimension(1200, 600);
 		
 		this.window = new JPanel();
 		this.layout = new CardLayout();
@@ -55,7 +53,6 @@ public class GraphicalInterface extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		layout.show(window, "main");
-		
 		this.add(window);
 		this.pack();
 		this.setLocationRelativeTo(null);

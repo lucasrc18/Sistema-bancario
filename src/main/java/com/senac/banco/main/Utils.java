@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Random;
 
 public class Utils {
     static NumberFormat formattingValues = new DecimalFormat ("R$ #, ##0.00");
@@ -29,5 +30,10 @@ public class Utils {
     		return null;
     	}
     	return font;
+    }
+    
+    /** Gera um número aleatorio entre o valor <i>min</i> e <i>max</i> **/
+    public static int randomNumber(int min, int max) {
+    	return new Random(System.currentTimeMillis()).nextInt(max - min + 1) + min;
     }
 }
