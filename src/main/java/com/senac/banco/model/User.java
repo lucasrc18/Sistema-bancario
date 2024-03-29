@@ -1,6 +1,11 @@
 package com.senac.banco.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
+	private static List<User> user_list = new ArrayList<User>();
+	
     private static int counter = 0;
     private int userNum;
     private String name;
@@ -9,18 +14,17 @@ public class User {
     private boolean hasBankAccount;
 
     public User(String name, String cpf, String email){
+    	this.cpf = cpf;
         this.name = name;
-        this.cpf = cpf;
         this.email = email;
-        User.counter += 1;
         this.userNum = User.counter;
         
-        System.out.println(this);
+        User.counter += 1;
+        user_list.add(this);
     }
     public User() {
     	User.counter += 1;
     	this.userNum = User.counter;
-    	System.out.println(this);
     }
     
     

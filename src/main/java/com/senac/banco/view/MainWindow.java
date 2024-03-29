@@ -101,8 +101,24 @@ public class MainWindow extends JPanel {
 				if(BankAccount.getBankAccount(user) != null) {
 					final BankAccount userBA = BankAccount.getBankAccount(user);
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja transferir? (R$)"));
-					// para quem?
 //					userBA.Transfer(/* destino */, amount);
+					
+					String[] options = new String[BankAccount.getBankAccountNums()+1];
+		            int last = options.length - 1;
+		            
+		            int i = 0;
+		            options[last] = "Ninguem selecionado";
+		            for(BankAccount BA : BankAccount.getAccounts()) {
+		            	options[i] = BA.getPeople().getName();
+		            }
+		            
+		            Object res = JOptionPane.showInputDialog(null, "Selecione o destinatario", "Quem irá receber?", JOptionPane.QUESTION_MESSAGE, null, options, options[last]);
+		            
+		            int index = BankAccount.account_number_list.indexOf(res);
+		            int accountNumber = BankAccount.account_number_list.get(index);
+		            BankAccount BA = BankAccount.account_list.get(accountNumber);
+		            
+		            userBA.Transfer(BA, amount);
 				} else {
 					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);

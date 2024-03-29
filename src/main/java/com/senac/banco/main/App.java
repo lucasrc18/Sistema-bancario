@@ -62,66 +62,16 @@ public class App {
             System.err.println("Erro ao criar a tabela: " + e.getMessage());
         }
     }
-
-    public static void operations(){
-
-        System.out.println("-----------------------------------------------------");
-        System.out.println("--------------Bem vindo ao flaBankinho!--------------");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("-------Selecione a operação que deseja realizar------");
-        System.out.println("-----------------------------------------------------");
-        System.out.println("Opção 1: Criar conta");
-        System.out.println("Opção 2: Depositar");
-        System.out.println("Opção 3: Sacar");
-        System.out.println("Opção 4: Transferir");
-        System.out.println("Opção 5: Listar contas");
-        System.out.println("Opção 6: Sair");
-
-        int operation = input.nextInt();
-
-        switch (operation){
-            case 1:
-                createAccount();
-                break;
-            case 2:
-                deposit();
-                break;
-            case 3:
-                withdraw();
-                break;
-            case 4:
-                transfer();
-                break;
-            case 5:
-                list();
-                break;
-            case 6:
-                System.out.println("Finalizando progrOpção");
-               System.exit(0);
-
-            default:
-                System.out.println("Opção invalida");
-                operations();
-                break;
-        }
-    }
+    
     public static void createAccount(){
-        System.out.println("\nNome: ");
         String name = input.next();
-        System.out.println("\nCPF:  ");
         String cpf = input.next();
-        System.out.println("\nEmail: ");
         String email = input.next();
 
-        User people = new User(name,cpf,email);
-        BankAccount account = new BankAccount(people);
+        User user = new User(name,cpf,email);
+        BankAccount account = new BankAccount(user);
 
         bankAccounts.add(account);
-
-        System.out.println("Sua conta foi criada com sucesso!");
-
-        operations();
-
     }
 
     private static BankAccount findAccount(int accountNumber){
@@ -133,71 +83,4 @@ public class App {
         }
         return null;
     }
-
-    public static void  deposit(){
-        System.out.println("Numero da Conta: ");
-        int accountNumber = input.nextInt();
-
-        BankAccount account = findAccount(accountNumber);
-
-        if (account != null){
-            System.out.println("Qual valor deseja depositar? ");
-            Double valueDeposit = input.nextDouble();
-            account.Deposit(valueDeposit);
-            System.out.println("Valor depositado com sucesso! ");
-
-        }else {
-            System.out.println("Conta não encontrada ");
-        }
-        operations();
-    }
-    public static void withdraw(){
-        System.out.println("Numero da conta: ");
-        int accountNumber = input.nextInt();
-        BankAccount account = findAccount(accountNumber);
-        if (account != null){
-            System.out.println("Qual valor deseja sacar ");
-            Double  withdrawalValue = input.nextDouble();
-            account.Withdraw(withdrawalValue);
-            System.out.println("Saque realizado com sucesso! ");
-        }else {
-            System.out.println("Conta não encontrada! ");
-        }
-        operations();
-
-    }
-
-    public static void transfer(){
-        System.out.println("Numero da conta do remetente: ");
-        int senderAccountNumber = input.nextInt();
-        BankAccount senderAccount = findAccount(senderAccountNumber);
-        if(senderAccount != null){
-            System.out.println("Numero da conta do destinatario: ");
-            int recipientAccountNumber = input.nextInt();
-
-            BankAccount recipientAccount = findAccount(recipientAccountNumber);
-            if(recipientAccount != null){
-                System.out.println("Qual valor deseja tranferir");
-                Double value = input.nextDouble();
-
-                senderAccount.Transfer(recipientAccount,value);
-            }
-        }
-        operations();
-
-    }
-    public static void list(){
-        if (bankAccounts.size() > 0){
-            for (BankAccount account: bankAccounts){
-                System.out.println(account);
-            }
-
-            }else{
-            System.out.println("Não a contas cadastradas! ");
-        }
-        operations();
-    }
-
-
-
 }

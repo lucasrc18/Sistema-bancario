@@ -13,8 +13,8 @@ import java.lang.NullPointerException;
 import com.senac.banco.main.Utils;
 
 public class BankAccount {
-	private final static List<Integer> account_number_list = new ArrayList<Integer>();
-	private final static Map<Integer, BankAccount> account_list = new HashMap<Integer, BankAccount>();
+	public final static List<Integer> account_number_list = new ArrayList<Integer>();
+	public final static Map<Integer, BankAccount> account_list = new HashMap<Integer, BankAccount>();
 	private double balance = 0.0;
 	private final int accountNumber;
 	private final User user;
@@ -60,8 +60,7 @@ public class BankAccount {
 		
 		account_list.put(this.accountNumber, this);
 		account_number_list.add(this.accountNumber);
-		
-//		System.out.println(toString());
+	
 	}
 	
 	
@@ -123,6 +122,8 @@ public class BankAccount {
 
             depositAccount.setBalance(depositAccount.getBalance() + value);
             
+            //
+            
             JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!");
         } else {
         	JOptionPane.showMessageDialog(null, "Não foi possivel realizar a tranferência");
@@ -131,5 +132,18 @@ public class BankAccount {
     }
 
 	public void setAccountNumber(int i) {
+	}
+	
+	public static int getBankAccountNums() {
+		return account_list.size();
+	}
+	
+	public static BankAccount[] getAccounts() {
+		BankAccount[] list = new BankAccount[getBankAccountNums()];
+		int index = 0;
+		for(Map.Entry<Integer, BankAccount> entry : account_list.entrySet()) {
+			list[index] = entry.getValue();
+		}
+		return list;
 	}
 }
