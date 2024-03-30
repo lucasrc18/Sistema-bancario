@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -41,7 +42,7 @@ public class UserRegistrationWindow extends JFrame {
 		
 		JPanel fieldsPanel = new JPanel();
 
-		final JTextField nameField, cpfField, emailField;
+		final TextField nameField, cpfField, emailField;
 		Dimension textFieldDs = new Dimension(250, 30);
 		
 		nameField = new TextField("Digite seu nome...");
@@ -64,33 +65,48 @@ public class UserRegistrationWindow extends JFrame {
 		updateBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!cpfField.getText().isEmpty())
-					user.setCPF(cpfField.getText());
-				if(!nameField.getText().isEmpty())
-					user.setName(nameField.getText());
-				if(!emailField.getText().isEmpty())
-					user.setEmail(emailField.getText());
+				String cpf = cpfField.getText();
+				String name = nameField.getText();
+				String email = emailField.getText();
 				
-				user.createBankAccount();
+				String namePlaceholder = nameField.getPlaceholder();
+				String cpfPlaceholder = cpfField.getPlaceholder();
+				String emailPlaceholder = emailField.getPlaceholder();
 				
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						BankAccount userBA = BankAccount.getBankAccount(user);
-						
-						String userName = "Nome: " + user.getName();
-						String userCpf = "CPF: " + user.getCPF();
-						String userAccountNum = (userBA != null) ? "N°: " + Integer.toString(userBA.getAccountNumber()) : "Não registrado";
-						String userBalance = (userBA != null) ? Utils.doubleToRealCurrency(userBA.getBalance()) : "R$ ?";
-						
-						accountLabels.nameLabel.setText(userName);
-						accountLabels.cpfLabel.setText(userCpf);
-						accountLabels.accountNumLabel.setText(userAccountNum);
-						accountLabels.balanceLabel.setText(userBalance);
-					}
-				});
-				
-				regwin.dispose();
+				if(cpf.isEmpty() || cpf.equals(cpfPlaceholder)) {
+					JOptionPane.showMessageDialog(regwin, "CPF vazio ou invalido");
+					return;
+				} else if(email.isEmpty() || email.equals(emailPlaceholder)) {
+					JOptionPane.showMessageDialog(regwin, "Email vazio ou invalido");
+					return;
+				} else if(name.isEmpty() || name.equals(namePlaceholder)) {
+					JOptionPane.showMessageDialog(regwin, "Nome vazio ou invalido");
+					return;
+				} else {
+					user.setCPF(cpf);
+					user.setName(name);
+					user.setEmail(email);
+					
+					user.createBankAccount();
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							BankAccount userBA = BankAccount.getBankAccount(user);
+							
+							String userName = "Nome: " + name;
+							String userCpf = "CPF: " + cpf;
+							String userAccountNum = (userBA != null) ? "N°: " + Integer.toString(userBA.getAccountNumber()) : "Não registrado";
+							
+							accountLabels.nameLabel.setText(userName);
+							accountLabels.cpfLabel.setText(userCpf);
+							accountLabels.accountNumLabel.setText(userAccountNum);
+							accountLabels.updateBalance(userBA);
+						}
+					});
+					
+					regwin.dispose();
+				}
 			}
 
 		});

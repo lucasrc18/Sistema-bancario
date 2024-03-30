@@ -65,7 +65,7 @@ public class TextField extends JTextField {
 	
 	/** Setter para o placeholder
 	*  @param placeholder: String */
-	public void getPlaceholder(String placeholder) {
+	public void setPlaceholder(String placeholder) {
 		if(this.placeHolder == placeholder)
 			return;
 		

@@ -60,7 +60,6 @@ public class BankAccount {
 		
 		account_list.put(this.accountNumber, this);
 		account_number_list.add(this.accountNumber);
-	
 	}
 	
 	
@@ -87,7 +86,7 @@ public class BankAccount {
 		return accountNumber;
 	}
 
-	public User getPeople() {
+	public User getUser() {
 		return user;
 	}
 
@@ -99,40 +98,41 @@ public class BankAccount {
 				"\nSaldo: " + Utils.doubleToString(this.getBalance()) +
 				"\n";
 	}
-	public void Deposit (Double value){
+	public boolean Deposit (double value){
 		if (value > 0){
 			setBalance(getBalance() + value);
 			JOptionPane.showMessageDialog(null, "Deposito realizado com sucesso!");
-		} else {
-			JOptionPane.showMessageDialog(null, "Não  foi possivel realizar o deposito");
-		}
+			return true;
+		} 
+		JOptionPane.showMessageDialog(null, "EU TENTEEI!, mas não  foi possivel realizar o deposito");
+		return false;
 	}
 
-	public void Withdraw (Double value){
-        if(value > 0 && this.getBalance() >= value){
+	public boolean Withdraw (double value){
+        if(value > 0 && getBalance() >= value){
             setBalance(getBalance() - value);
             JOptionPane.showMessageDialog(null, "Saque realizado com sucesso!");
-        }else {
-        	JOptionPane.showMessageDialog(null, "Não foi possivel realizar o saque!");
+            return true;
         }
-    }
-    public void Transfer (BankAccount depositAccount, Double value){
+        JOptionPane.showMessageDialog(null, "EU TENTEEI!, mas não foi possivel realizar o saque!");
+        return false;
+	}
+	
+    public boolean Transfer (BankAccount depositAccount, double value){
         if (value > 0 && this.getBalance() >= value){
             setBalance(getBalance() - value);
 
             depositAccount.setBalance(depositAccount.getBalance() + value);
             
-            //
-            
             JOptionPane.showMessageDialog(null, "Transferência realizada com sucesso!");
-        } else {
-        	JOptionPane.showMessageDialog(null, "Não foi possivel realizar a tranferência");
-        }
-
+            return true;
+        } 
+        
+        JOptionPane.showMessageDialog(null, "EU TENTEEI!, mas não foi possivel realizar a tranferência");
+        return false;
     }
 
-	public void setAccountNumber(int i) {
-	}
+	public void setAccountNumber(int i) {}
 	
 	public static int getBankAccountNums() {
 		return account_list.size();
@@ -143,6 +143,7 @@ public class BankAccount {
 		int index = 0;
 		for(Map.Entry<Integer, BankAccount> entry : account_list.entrySet()) {
 			list[index] = entry.getValue();
+			index += 1;
 		}
 		return list;
 	}

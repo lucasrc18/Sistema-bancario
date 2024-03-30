@@ -28,6 +28,7 @@ import javax.swing.border.LineBorder;
 
 import com.senac.banco.components.ImageComponent;
 import com.senac.banco.components.ImageComponent.ImageDimension;
+import com.senac.banco.main.Utils;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.User;
 
@@ -41,6 +42,11 @@ public class MainWindow extends JPanel {
 		public JLabel accountNumLabel;
 		public JLabel balanceLabel;
 		public JPanel panel;
+		
+		public void updateBalance(BankAccount userBA) {
+			String userBalance = (userBA != null) ? Utils.doubleToRealCurrency(userBA.getBalance()) : "R$ ?";
+			balanceLabel.setText(userBalance);
+		}
 	}
 	
 	public MainWindow() {
@@ -94,14 +100,12 @@ public class MainWindow extends JPanel {
 		withdrawBtn = new JButton("Saque");
 		depositBtn = new JButton("Deposito");
 		
-		
 		transferBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(BankAccount.getBankAccount(user) != null) {
 					final BankAccount userBA = BankAccount.getBankAccount(user);
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja transferir? (R$)"));
-//					userBA.Transfer(/* destino */, amount);
 					
 					String[] options = new String[BankAccount.getBankAccountNums()+1];
 		            int last = options.length - 1;
@@ -109,16 +113,25 @@ public class MainWindow extends JPanel {
 		            int i = 0;
 		            options[last] = "Ninguem selecionado";
 		            for(BankAccount BA : BankAccount.getAccounts()) {
-		            	options[i] = BA.getPeople().getName();
+		            	if(BA != null) {
+		            		options[i] = BA.getUser().getName();
+			            	i += 1;
+		            	}
 		            }
 		            
 		            Object res = JOptionPane.showInputDialog(null, "Selecione o destinatario", "Quem irá receber?", JOptionPane.QUESTION_MESSAGE, null, options, options[last]);
 		            
-		            int index = BankAccount.account_number_list.indexOf(res);
-		            int accountNumber = BankAccount.account_number_list.get(index);
-		            BankAccount BA = BankAccount.account_list.get(accountNumber);
-		            
-		            userBA.Transfer(BA, amount);
+		            int index;
+		            if(res != null) {
+		            	index = BankAccount.account_number_list.indexOf(res);
+		            	
+		            	int accountNumber = BankAccount.account_number_list.get(index);
+			            BankAccount BA = BankAccount.account_list.get(accountNumber);
+			            
+			            userBA.Transfer(BA, amount);
+		            } else {
+		            	JOptionPane.showMessageDialog(mainWindow, "EU TENTEEI, mas ocorreu um erro ao selecionar o destinatario");
+		            }
 				} else {
 					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);
@@ -131,7 +144,9 @@ public class MainWindow extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(BankAccount.getBankAccount(user) != null) {
 					double amount = Double.parseDouble(JOptionPane.showInputDialog("Qual valor deseja sacar? (R$)"));
-					BankAccount.getBankAccount(user).Withdraw(amount);
+					boolean result = BankAccount.getBankAccount(user).Withdraw(amount);
+					if(result)
+						accountLabels.updateBalance(BankAccount.getBankAccount(user));
 				} else {
 					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);
@@ -145,7 +160,10 @@ public class MainWindow extends JPanel {
 				if(BankAccount.getBankAccount(user) != null) {
 					String answer = JOptionPane.showInputDialog("Qual valor deseja depositar? (R$)");
 					double amount = Double.parseDouble(answer);
-					BankAccount.getBankAccount(user).Deposit(amount);
+					
+					boolean result = BankAccount.getBankAccount(user).Deposit(amount);
+					if(result)
+						accountLabels.updateBalance(BankAccount.getBankAccount(user));
 				} else {
 					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
 					new UserRegistrationWindow(user, accountLabels);

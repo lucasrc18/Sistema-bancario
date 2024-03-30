@@ -68,7 +68,7 @@ public class User {
     	
     	new BankAccount(this);
     }
-    
+      
     public void createBankAccount(double minDeposit) {
     	if(hasBankAccount)
     		return;
