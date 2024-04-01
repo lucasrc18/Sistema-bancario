@@ -45,6 +45,5 @@ public class App {
         GraphicalInterface gui = new GraphicalInterface(db);
     	
         bankAccounts = new ArrayList<BankAccount>();
-
     }
 }

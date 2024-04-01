@@ -4,8 +4,11 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.senac.banco.DB.SQLiteDB;
@@ -32,7 +35,7 @@ public class GraphicalInterface extends JFrame {
 	 * @params null
 	 * @returns this
 	 * */
-	public GraphicalInterface(SQLiteDB db) {
+	public GraphicalInterface(final SQLiteDB db) {
 		super("Sistema bancario");
 		
 		/** Define o tamanho da janela como 1200 / 600 (W / H) */
@@ -57,6 +60,16 @@ public class GraphicalInterface extends JFrame {
 		this.add(window);
 		this.pack();
 		this.setLocationRelativeTo(null);
+		
+		/**
+		 * Fecha a conexão com o banco de dados quando a janela for fechada
+		 * */
+		this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	db.closeConnection();
+            }
+        });
 	}
 	
 	

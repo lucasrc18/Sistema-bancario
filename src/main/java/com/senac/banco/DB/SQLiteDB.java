@@ -96,10 +96,9 @@ public class SQLiteDB {
         try {
             if (connection != null && !connection.isClosed()) {
                 connection.close();
-                System.out.println("Conexão com o banco de dados fechada com sucesso!");
             }
         } catch (SQLException e) {
-            System.err.println("Erro ao fechar a conexão com o banco de dados: " + e.getMessage());
+        	JOptionPane.showMessageDialog(null, "Erro ao fechar a conexão com o banco de dados: " + e.getMessage());
         }
     }
 }

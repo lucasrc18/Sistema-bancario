@@ -1,5 +1,6 @@
 package com.senac.banco;
 
+import com.senac.banco.DB.SQLiteDB;
 import com.senac.banco.main.App;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.model.User;
@@ -7,6 +8,7 @@ import com.senac.banco.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -43,19 +45,7 @@ public class AppTest {
     public void testDeposit() {
         double balance = userBA.getBalance();
         userBA.Deposit(20.0);
-        assertTrue(balance + 20 == userBA.getBalance());
-    }
-    
-    /**
-     * Testa fazendo um saque de 20 reais
-     * Se a funcionalidade de saque funcionar
-     * O saldo terá R$ 30.0
-     * */
-    @Test
-    public void testWithdraw() {
-    	System.out.println(userBA.getBalance());
-    	boolean result = userBA.Withdraw(20.0);
-    	assertTrue(result);
+        assertEquals(balance + 20, userBA.getBalance(), 0.01);
     }
     
     /**
@@ -72,7 +62,25 @@ public class AppTest {
     	
     	userBA.Transfer(destUserBA, 30.0);
     	
-    	assertTrue(userBA.getBalance() + 30 == destUserBA.getBalance() - 30);
+    	assertEquals(userBA.getBalance() + 30, destUserBA.getBalance() - 30, 0.01);
+    }
+    
+    /**
+     * Testa fazendo um saque de 20 reais
+     * Se a funcionalidade de saque funcionar
+     * O saldo terá R$ 30.0
+     * */
+    @Test
+    public void testWithdraw() {
+    	boolean result = userBA.Withdraw(20.0);
+    	assertTrue(result);
+    }
+    
+    @Test
+    public void testDatabaseIntegration() {
+    	SQLiteDB db = new SQLiteDB();
+    	
+    	assertTrue(db.getConnection() != null);
     }
     
     /**

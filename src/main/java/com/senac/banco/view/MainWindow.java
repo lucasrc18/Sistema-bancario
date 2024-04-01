@@ -130,15 +130,28 @@ public class MainWindow extends JPanel {
 		            Object res = JOptionPane.showInputDialog(null, "Selecione o destinatario", "Quem irá receber?", JOptionPane.QUESTION_MESSAGE, null, options, options[last]);
 		            
 		            int index;
-		            if(res != null) {
+		            /*if(res != null) {
 		            	index = BankAccount.account_number_list.indexOf(res);
 		            	
 		            	int accountNumber = BankAccount.account_number_list.get(index);
 			            BankAccount BA = BankAccount.account_list.get(accountNumber);
 			            
 			            userBA.Transfer(BA, amount);
-		            } else {
+		            }*/ 
+		            
+		            boolean result = false;
+		            for(BankAccount BA : BankAccount.getAccounts()) {
+		            	if(!BA.equals(userBA)) {
+		            		result = userBA.Transfer(BA, amount);
+		            		JOptionPane.showMessageDialog(mainWindow, "Transferencia realizada");
+		            		break;
+		            	}
+		            }
+		            if(!result) {
 		            	JOptionPane.showMessageDialog(mainWindow, "EU TENTEEI, mas ocorreu um erro ao selecionar o destinatario");
+		            	return;
+		            } else {
+		            	accountLabels.updateBalance(BankAccount.getBankAccount(user));
 		            }
 				} else {
 					JOptionPane.showMessageDialog(mainWindow, "Você precisa de uma conta primeiro");
