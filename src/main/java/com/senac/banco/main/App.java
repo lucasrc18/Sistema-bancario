@@ -36,51 +36,15 @@ public class App {
         }
 
         SQLiteDB db = new SQLiteDB();
-        createTable();
+        try {
+			db.createTable();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        GraphicalInterface gui = new GraphicalInterface();
-//    	new UserRegistrationWindow();
+        GraphicalInterface gui = new GraphicalInterface(db);
     	
         bankAccounts = new ArrayList<BankAccount>();
-        //operations();
 
-    }
-    public static void createTable() {
-        String url = "jdbc:sqlite:banco.db";
-
-        try (Connection connection = DriverManager.getConnection(url);
-             Statement statement = connection.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS bank_accounts (" +
-            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "nome TEXT NOT NULL," +
-                    "CPF TEXT NOT NULL," +
-                    "Email TEXT NOT NULL," +
-                    "numeroDaConta INTEGER NOT NULL," +
-                    "Saldo REAL NOT NULL)";
-            statement.execute(sql);
-        } catch (SQLException e) {
-            System.err.println("Erro ao criar a tabela: " + e.getMessage());
-        }
-    }
-    
-    public static void createAccount(){
-        String name = input.next();
-        String cpf = input.next();
-        String email = input.next();
-
-        User user = new User(name,cpf,email);
-        BankAccount account = new BankAccount(user);
-
-        bankAccounts.add(account);
-    }
-
-    private static BankAccount findAccount(int accountNumber){
-        if (bankAccounts.size() > 0 ){
-            for (BankAccount account: bankAccounts){
-                if(account.getAccountNumber() == accountNumber)
-                    return account;
-            }
-        }
-        return null;
     }
 }

@@ -3,6 +3,8 @@ package com.senac.banco.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class User {
 	private static List<User> user_list = new ArrayList<User>();
 	
@@ -12,7 +14,15 @@ public class User {
     private String cpf;
     private String email;
     private boolean hasBankAccount;
-
+    
+    public User(boolean voidModel) {
+		if(voidModel)
+			return;
+		
+		User.counter += 1;
+    	this.userNum = User.counter;
+    }
+    
     public User(String name, String cpf, String email){
     	this.cpf = cpf;
         this.name = name;
@@ -23,8 +33,7 @@ public class User {
         user_list.add(this);
     }
     public User() {
-    	User.counter += 1;
-    	this.userNum = User.counter;
+    	this(false);
     }
     
     
@@ -46,8 +55,45 @@ public class User {
     public void setName(String name) {
     	this.name = name;
     }
-    public void setCPF(String cpf){
-        this.cpf = cpf;
+    public boolean setCPF(String cpf){
+        if(cpf == null) {
+        	this.cpf = null;
+        	return false; 
+        }
+    	
+    	if(cpf.length() != 11) {
+        	JOptionPane.showMessageDialog(null, "CPF invalido");  
+        	return false;
+        }
+        
+        int sum = 0;
+		for(int i = 0; i < 9; i++) {
+			// Subtraimos por 0 para pegar o valor numerico do digito
+			sum += (cpf.charAt(i) - '0') * (10-i);
+		}
+		
+		int digit1 = 11 - (sum % 11);
+		if(digit1 >= 10) {
+			digit1 = 0;
+		}
+		
+		sum = 0;
+		for(int i = 0; i < 10; i++) {
+			sum += (cpf.charAt(i) - '0') * (11-i);
+		}
+		
+		int digit2 = 11 - (sum % 11);
+		if(digit2 >= 10) {
+			digit2 = 0;
+		}
+		
+		if(cpf.charAt(10) - '0' != digit2) {
+			JOptionPane.showMessageDialog(null, "CPF invalido"); 
+			return false;
+		}
+    	
+    	this.cpf = cpf;
+    	return true;
     }
     
     public void setEmail(String email){

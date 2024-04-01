@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.senac.banco.DB.SQLiteDB;
 import com.senac.banco.main.Utils;
 
 /*
@@ -31,7 +32,7 @@ public class GraphicalInterface extends JFrame {
 	 * @params null
 	 * @returns this
 	 * */
-	public GraphicalInterface() {
+	public GraphicalInterface(SQLiteDB db) {
 		super("Sistema bancario");
 		
 		/** Define o tamanho da janela como 1200 / 600 (W / H) */
@@ -43,7 +44,7 @@ public class GraphicalInterface extends JFrame {
 		window.setLayout(layout);
 		
 		
-		main = new MainWindow();
+		main = new MainWindow(db);
 		window.add(main, "main");
 		
 		// Configura a janela

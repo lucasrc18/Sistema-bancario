@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
@@ -26,6 +27,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import com.senac.banco.DB.SQLiteDB;
 import com.senac.banco.components.ImageComponent;
 import com.senac.banco.components.ImageComponent.ImageDimension;
 import com.senac.banco.main.Utils;
@@ -49,14 +51,20 @@ public class MainWindow extends JPanel {
 		}
 	}
 	
-	public MainWindow() {
+	public MainWindow(SQLiteDB db) {
 		super();
 		
 		final MainWindow mainWindow = this;
 		
 		Font font = new Font("Roboto", Font.PLAIN, 20);
 		
-		final User user = new User();
+		final User user;
+		if(db.getUser() != null) {
+			User userData = db.getUser();
+			user = new User(userData.getName(), userData.getCPF(), userData.getEmail());
+		} else {
+			user = new User();
+		}
 		
 		/*
 		 * Transferir

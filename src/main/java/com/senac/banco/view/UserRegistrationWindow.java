@@ -83,7 +83,10 @@ public class UserRegistrationWindow extends JFrame {
 					JOptionPane.showMessageDialog(regwin, "Nome vazio ou invalido");
 					return;
 				} else {
-					user.setCPF(cpf);
+					if(!user.setCPF(cpf)) {
+						user.setCPF(null);
+						return;
+					}
 					user.setName(name);
 					user.setEmail(email);
 					
