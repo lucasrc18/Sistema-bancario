@@ -79,6 +79,6 @@ public class ImageComponent extends JPanel {
         }
 
 //        return getImage().getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-        return getImage().getScaledInstance((int)382/2, (int) 421/2, Image.SCALE_SMOOTH);
+        return getImage().getScaledInstance((int)460/2, (int) 421/2, Image.SCALE_SMOOTH);
     }
 }

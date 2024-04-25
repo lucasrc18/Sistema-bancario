@@ -198,7 +198,7 @@ public class MainWindow extends JPanel {
 		
 		JPanel content = new JPanel();
 		
-		ImageComponent img = new ImageComponent("moedaxxxs.png");
+		ImageComponent img = new ImageComponent("LogoBank.png");
 		
 		content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 		
