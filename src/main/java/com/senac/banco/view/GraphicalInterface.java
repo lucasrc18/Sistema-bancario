@@ -36,7 +36,7 @@ public class GraphicalInterface extends JFrame {
 	 * @params null
 	 * @returns this
 	 * */
-	public GraphicalInterface(final RealtimeDatabase db) {
+	public GraphicalInterface() {
 		super("Sistema bancario");
 		
 		/** Define o tamanho da janela como 1200 / 600 (W / H) */
@@ -48,7 +48,7 @@ public class GraphicalInterface extends JFrame {
 		window.setLayout(layout);
 		
 		
-		main = new MainWindow(db);
+		main = new MainWindow();
 		window.add(main, "main");
 		
 		// Configura a janela
@@ -73,7 +73,6 @@ public class GraphicalInterface extends JFrame {
         });
 	}
 	
-	
 	/**
 	 * Alterna entre as telas da interface
 	 * @params windowName: String
@@ -83,6 +82,3 @@ public class GraphicalInterface extends JFrame {
 		layout.show(window, windowName);
 	}
 }
-
-
-// 

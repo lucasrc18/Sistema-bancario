@@ -52,7 +52,7 @@ public class MainWindow extends JPanel {
 		}
 	}
 	
-	public MainWindow(RealtimeDatabase db) {
+	public MainWindow() {
 		super();
 		
 		final MainWindow mainWindow = this;

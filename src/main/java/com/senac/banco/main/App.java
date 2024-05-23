@@ -6,6 +6,7 @@ import com.senac.banco.services.RealtimeDatabase;
 import com.senac.banco.view.GraphicalInterface;
 
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -15,8 +16,9 @@ import java.util.ArrayList;
  * Projeto de sistema bancario, que simula transações e operações básicas
  * */
 public class App {
-    static Scanner input = new Scanner(System.in);
     public static ArrayList<BankAccount> bankAccounts;
+    public static RealtimeDatabase db = null;
+    
     public static void main(String[] args){
         User pedro = new User("Pedro", "234.789.197-32", "pedro@gmail.com");
         pedro.createBankAccount(2000);
@@ -24,10 +26,8 @@ public class App {
         arrascaeta.createBankAccount(1800);
         User ribas = new User("Diego ribas", "789.541.187-42", "ribas@gmail.com");
         ribas.createBankAccount(2300);
-    	
-    	RealtimeDatabase db = new RealtimeDatabase();
-        
-        GraphicalInterface gui = new GraphicalInterface(db);
+		
+        GraphicalInterface gui = new GraphicalInterface();
     	
         bankAccounts = new ArrayList<BankAccount>();
     }

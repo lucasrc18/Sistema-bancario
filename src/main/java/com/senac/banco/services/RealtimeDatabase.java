@@ -1,8 +1,7 @@
 package com.senac.banco.services;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
-
-import javax.swing.JOptionPane;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -10,19 +9,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class RealtimeDatabase {
-    public FirebaseDatabase db_instance;
-    
-	public RealtimeDatabase() {
-	    db_instance = FirebaseDatabase.getInstance();
+public class RealtimeDatabase extends Firebase {    
+	public RealtimeDatabase() throws IOException {
+	    super();
 	}
 	
 	public DatabaseReference getDatabaseReference(String path) {
-		return db_instance.getReference(path);
+		return getDatabaseInstance().getReference(path);
 	}
 	
 	public DatabaseReference getDatabaseReference() {
-		return db_instance.getReference();
+		return getDatabaseInstance().getReference();
 	}
 	
 	public void setValue(DatabaseReference ref, Object value) {
@@ -63,7 +60,5 @@ public class RealtimeDatabase {
 	public Object getValue(String path) throws InterruptedException {
 		return getValue(getDatabaseReference(path));
 	}
-	
-	
 
 }

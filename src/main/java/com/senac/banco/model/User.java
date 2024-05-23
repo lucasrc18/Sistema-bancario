@@ -1,9 +1,14 @@
 package com.senac.banco.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+
+import com.google.firebase.database.FirebaseDatabase;
+import com.senac.banco.services.Firebase;
+import com.senac.banco.services.RealtimeDatabase;
 
 public class User {
 	private static List<User> user_list = new ArrayList<User>();
@@ -15,12 +20,20 @@ public class User {
     private String email;
     private boolean hasBankAccount;
     
+    private RealtimeDatabase database;
+    
     public User(boolean voidModel) {
 		if(voidModel)
 			return;
 		
 		User.counter += 1;
     	this.userNum = User.counter;
+    	
+    	try {
+			database = new RealtimeDatabase();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public User(String name, String cpf, String email){
@@ -36,8 +49,6 @@ public class User {
     	this(false);
     }
     
-    
-    
     public String getName(){
         return name;
     }
@@ -49,12 +60,13 @@ public class User {
     public String getEmail(){
         return email;
     }
-    
-    
-    
+   
     public void setName(String name) {
     	this.name = name;
+    	
+    	database.setValue("desktop_name", name);
     }
+    
     public boolean setCPF(String cpf){
         if(cpf == null) {
         	this.cpf = null;
@@ -93,11 +105,13 @@ public class User {
 		}
     	
     	this.cpf = cpf;
+    	database.setValue("desktop_cpf", cpf);
     	return true;
     }
     
     public void setEmail(String email){
         this.email = email;
+        database.setValue("desktop_email", email);
     }
     
     public static int getUsersCount() {
@@ -120,6 +134,10 @@ public class User {
     		return;
     	
     	new BankAccount(this, minDeposit);
+    }
+    
+    public RealtimeDatabase getDatabase() {
+    	return database;
     }
     
     public String toString(){

@@ -11,6 +11,7 @@ import java.lang.NumberFormatException;
 import java.lang.NullPointerException;
 
 import com.senac.banco.main.Utils;
+import com.senac.banco.services.RealtimeDatabase;
 
 public class BankAccount {
 	public final static List<Integer> account_number_list = new ArrayList<Integer>();
@@ -19,6 +20,8 @@ public class BankAccount {
 	private final int accountNumber;
 	private final User user;
 
+	private final RealtimeDatabase database;
+	
 	public BankAccount(User user) {
 		Random random = new Random(System.currentTimeMillis());
 		
@@ -44,6 +47,8 @@ public class BankAccount {
 		
 		account_list.put(this.accountNumber, this);
 		account_number_list.add(this.accountNumber);
+		
+		database = user.getDatabase();
 	}
 	
 	public BankAccount (User user, double minDeposit) {
@@ -60,6 +65,8 @@ public class BankAccount {
 		
 		account_list.put(this.accountNumber, this);
 		account_number_list.add(this.accountNumber);
+		
+		database = user.getDatabase();
 	}
 	
 	
@@ -80,6 +87,8 @@ public class BankAccount {
 
 	public void setBalance(double balance) {
 		this.balance = balance;
+		
+		database.setValue("desktop_balance", balance);
 	}
 
 	public int getAccountNumber() {
