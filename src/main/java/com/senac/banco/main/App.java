@@ -1,15 +1,12 @@
 package com.senac.banco.main;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import com.senac.banco.DB.SQLiteDB;
-import com.senac.banco.model.BankAccount;
+
 import com.senac.banco.model.User;
+import com.senac.banco.model.BankAccount;
+import com.senac.banco.services.RealtimeDatabase;
 import com.senac.banco.view.GraphicalInterface;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * @author Júlia Gomes
@@ -28,20 +25,8 @@ public class App {
         User ribas = new User("Diego ribas", "789.541.187-42", "ribas@gmail.com");
         ribas.createBankAccount(2300);
     	
-    	try {
-            Class.forName("com.senac.banco.DB.SQLiteDB");
-        } catch (ClassNotFoundException e) {
-            System.err.println("Erro ao carregar o driver: " + e.getMessage());
-            System.exit(1);
-        }
-
-        SQLiteDB db = new SQLiteDB();
-        try {
-			db.createTable();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+    	RealtimeDatabase db = new RealtimeDatabase();
+        
         GraphicalInterface gui = new GraphicalInterface(db);
     	
         bankAccounts = new ArrayList<BankAccount>();

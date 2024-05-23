@@ -12,27 +12,28 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.SQLException;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.CompoundBorder;
 
-import com.senac.banco.DB.SQLiteDB;
+import com.senac.banco.main.Utils;
+import com.senac.banco.model.User;
+import com.senac.banco.model.BankAccount;
+import com.senac.banco.services.RealtimeDatabase;
 import com.senac.banco.components.ImageComponent;
 import com.senac.banco.components.ImageComponent.ImageDimension;
-import com.senac.banco.main.Utils;
-import com.senac.banco.model.BankAccount;
-import com.senac.banco.model.User;
+
 
 /**
  * Classe responsavel por cordenar a pagina principal da aplicação
@@ -51,7 +52,7 @@ public class MainWindow extends JPanel {
 		}
 	}
 	
-	public MainWindow(SQLiteDB db) {
+	public MainWindow(RealtimeDatabase db) {
 		super();
 		
 		final MainWindow mainWindow = this;
@@ -59,12 +60,13 @@ public class MainWindow extends JPanel {
 		Font font = new Font("Roboto", Font.PLAIN, 20);
 		
 		final User user;
-		if(db.getUser() != null) {
-			User userData = db.getUser();
-			user = new User(userData.getName(), userData.getCPF(), userData.getEmail());
-		} else {
-			user = new User();
-		}
+		User userdata = new User();
+		userdata.setName("Lucas");
+		userdata.setCPF("123.456.789-32");
+		userdata.setEmail("lucas@gmail");
+		user = userdata;
+		
+		//TODO: Implementar o sistema de autenticação
 		
 		/*
 		 * Transferir

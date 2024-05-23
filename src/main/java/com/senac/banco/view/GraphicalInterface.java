@@ -11,8 +11,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.senac.banco.DB.SQLiteDB;
 import com.senac.banco.main.Utils;
+import com.senac.banco.services.Firebase;
+import com.senac.banco.services.RealtimeDatabase;
 
 /*
  * Classe responsável por cordenar a interface gráfica
@@ -35,7 +36,7 @@ public class GraphicalInterface extends JFrame {
 	 * @params null
 	 * @returns this
 	 * */
-	public GraphicalInterface(final SQLiteDB db) {
+	public GraphicalInterface(final RealtimeDatabase db) {
 		super("Sistema bancario");
 		
 		/** Define o tamanho da janela como 1200 / 600 (W / H) */
@@ -67,7 +68,7 @@ public class GraphicalInterface extends JFrame {
 		this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-            	db.closeConnection();
+            	Firebase.TerminateFirebaseApp();
             }
         });
 	}
