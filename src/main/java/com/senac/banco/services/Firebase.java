@@ -13,10 +13,10 @@ public class Firebase {
 	
 	private Firebase() throws IOException {
 	    // make sure Firebase Class is initialized only once
-	    if (db_instance != null) {
-	        return;
-	    }
-	    
+		if (db_instance != null) {
+			return;
+		}
+
 		FileInputStream serviceAccount = new FileInputStream("config/serviceAccount.json");
 		
 		FirebaseOptions options = FirebaseOptions.builder()
