@@ -2,18 +2,13 @@ package com.senac.banco.view;
 
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.senac.banco.main.Utils;
 import com.senac.banco.services.Firebase;
-import com.senac.banco.services.RealtimeDatabase;
 
 /*
  * Classe responsável por cordenar a interface gráfica

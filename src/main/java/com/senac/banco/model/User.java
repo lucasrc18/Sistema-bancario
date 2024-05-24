@@ -6,18 +6,16 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import com.google.firebase.database.FirebaseDatabase;
-import com.senac.banco.services.Firebase;
 import com.senac.banco.services.RealtimeDatabase;
 
 public class User {
 	private static List<User> user_list = new ArrayList<User>();
 	
     private static int counter = 0;
-    private int userNum;
-    private String name;
-    private String cpf;
-    private String email;
+    private int userNum = -1;
+    private String name = null;
+    private String cpf = null;
+    private String email = null;
     private boolean hasBankAccount;
     
     private RealtimeDatabase database;
@@ -44,9 +42,37 @@ public class User {
         
         User.counter += 1;
         user_list.add(this);
+        
+        try {
+            database = new RealtimeDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    
     public User() {
-    	this(false);
+        try {
+            database = new RealtimeDatabase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        double balance = 0;
+        try {
+            this.name = (String) database.getValue("desktop_name");
+            this.cpf = (String) database.getValue("desktop_cpf");
+            this.email = (String) database.getValue("desktop_email");
+            balance = ((Long) database.getValue("balance")).doubleValue();
+        } catch (Exception e) {
+			e.printStackTrace();
+		}
+        
+        // Init bank account
+        if(balance == 0) {
+	        this.createBankAccount();
+        } else {
+            this.createBankAccount(balance);
+        }
     }
     
     public String getName(){

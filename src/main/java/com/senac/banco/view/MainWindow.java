@@ -1,38 +1,25 @@
 package com.senac.banco.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.sql.SQLException;
+import java.io.IOException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.border.Border;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.CompoundBorder;
+
 
 import com.senac.banco.main.Utils;
 import com.senac.banco.model.User;
 import com.senac.banco.model.BankAccount;
 import com.senac.banco.services.RealtimeDatabase;
 import com.senac.banco.components.ImageComponent;
-import com.senac.banco.components.ImageComponent.ImageDimension;
 
 
 /**
@@ -59,14 +46,8 @@ public class MainWindow extends JPanel {
 		
 		Font font = new Font("Roboto", Font.PLAIN, 20);
 		
-		final User user;
-		User userdata = new User();
-		userdata.setName("Lucas");
-		userdata.setCPF("123.456.789-32");
-		userdata.setEmail("lucas@gmail");
-		user = userdata;
+		final User user = new User();
 		
-		//TODO: Implementar o sistema de autenticação
 		
 		/*
 		 * Transferir
@@ -97,6 +78,20 @@ public class MainWindow extends JPanel {
 		accountLabels.balanceLabel = new JLabel("R$ ?", SwingConstants.CENTER);
 		accountLabels.balanceLabel.setFont(font);
 		
+		// Load user
+		if(user.getName() != null) {
+			accountLabels.nameLabel.setText("Nome: " + user.getName());
+		}
+        if(user.getCPF() != null) {
+	        accountLabels.cpfLabel.setText("CPF: " + user.getCPF());
+        }
+        
+        if(BankAccount.getBankAccount(user) != null) {
+			BankAccount userBA = BankAccount.getBankAccount(user);
+			accountLabels.accountNumLabel.setText("N°: " + Integer.toString(userBA.getAccountNumber()));
+			accountLabels.updateBalance(userBA);
+		}
+
 		accountPanel.add(accountLabels.nameLabel);
 		accountPanel.add(accountLabels.cpfLabel);
 		accountPanel.add(accountLabels.accountNumLabel);

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.swing.JOptionPane;
 import java.lang.NumberFormatException;
@@ -23,8 +22,6 @@ public class BankAccount {
 	private final RealtimeDatabase database;
 	
 	public BankAccount(User user) {
-		Random random = new Random(System.currentTimeMillis());
-		
 		int accountNumber = Utils.randomNumber(100000, 999999);
 		while(account_number_list.contains(accountNumber)) {			
 			accountNumber = Utils.randomNumber(100000, 999999);
@@ -51,22 +48,20 @@ public class BankAccount {
 		database = user.getDatabase();
 	}
 	
-	public BankAccount (User user, double minDeposit) {
-		Random random = new Random(System.currentTimeMillis());
-		
-		int accountNumber = Utils.randomNumber(100000, 999999);
+	public BankAccount (User user, double balance) {
+	    database = user.getDatabase();
+	    
+	    int accountNumber = Utils.randomNumber(100000, 999999);
 		while(account_number_list.contains(accountNumber)) {			
 			accountNumber = Utils.randomNumber(100000, 999999);
 		}
 		this.accountNumber = accountNumber;
 		this.user = user;
 		
-		this.balance = minDeposit;
+		this.balance = balance;
 		
 		account_list.put(this.accountNumber, this);
 		account_number_list.add(this.accountNumber);
-		
-		database = user.getDatabase();
 	}
 	
 	
@@ -77,6 +72,8 @@ public class BankAccount {
 		int index = user.getUserNum()-1;
 		if(index >= account_number_list.size())
 			return null;
+		if(index < 0)
+		    return null;
 		
 		return account_list.get(account_number_list.get(index));
 	}
@@ -88,7 +85,7 @@ public class BankAccount {
 	public void setBalance(double balance) {
 		this.balance = balance;
 		
-		database.setValue("desktop_balance", balance);
+		database.setValue("balance", balance);
 	}
 
 	public int getAccountNumber() {

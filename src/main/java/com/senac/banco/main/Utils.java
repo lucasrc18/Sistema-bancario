@@ -2,8 +2,6 @@ package com.senac.banco.main;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;

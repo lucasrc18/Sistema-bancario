@@ -8,8 +8,6 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import com.senac.banco.components.ImageComponent.ImageDimension;
-
 public class ImageComponent extends JPanel {
 
 	private Image image;

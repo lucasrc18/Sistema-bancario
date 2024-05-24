@@ -5,8 +5,6 @@ import com.senac.banco.model.BankAccount;
 import com.senac.banco.services.RealtimeDatabase;
 import com.senac.banco.view.GraphicalInterface;
 
-import java.util.Scanner;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -27,8 +25,8 @@ public class App {
         User ribas = new User("Diego ribas", "789.541.187-42", "ribas@gmail.com");
         ribas.createBankAccount(2300);
 		
-        GraphicalInterface gui = new GraphicalInterface();
-    	
         bankAccounts = new ArrayList<BankAccount>();
+    	
+        GraphicalInterface gui = new GraphicalInterface();
     }
 }
